@@ -1,10 +1,22 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 
-const app = express();
-const PORT = 3000;
+import userRouter from './routes/users';
+import { createConnection } from './db';
 
-app.get('/', (req, res) => {
-  res.send('Hello world');
-});
+async function bootstrap() {
+  try {
+    const app = express();
+    const PORT = 3000;
+    createConnection();
 
-app.listen(PORT);
+    app.use(bodyParser.json());
+    app.use('/api/users', userRouter);
+
+    app.listen(PORT);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+bootstrap();
