@@ -39,3 +39,9 @@ export function login({ username, password }: LoginDTO) {
     }
   };
 }
+
+export function logout() {
+  return {
+    type: UserActionTypes.logout,
+  };
+}

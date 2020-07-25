@@ -1,7 +1,7 @@
 import axios, { AxiosPromise } from 'axios';
 import { User } from '../store/reducers/userReducer';
 
-interface RegisterDTO {
+export interface RegisterDTO {
   username: string;
   password: string;
   name: string;

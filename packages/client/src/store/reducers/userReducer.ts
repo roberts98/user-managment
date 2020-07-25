@@ -32,7 +32,15 @@ type LoginSuccessAction = {
   };
 };
 
-type Action = LoginStartedAction | LoginFailedAction | LoginSuccessAction;
+type LogoutAction = {
+  type: UserActionTypes.logout;
+};
+
+type Action =
+  | LoginStartedAction
+  | LoginFailedAction
+  | LoginSuccessAction
+  | LogoutAction;
 
 const initState: State = {
   user: null,
@@ -62,6 +70,12 @@ function userReducer(state = initState, action: Action): State {
         isLoading: false,
         user: action.payload.user,
         token: action.payload.token,
+      };
+
+    case UserActionTypes.logout:
+      return {
+        ...state,
+        user: null,
       };
 
     default:
