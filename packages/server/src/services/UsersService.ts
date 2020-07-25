@@ -1,7 +1,6 @@
-import { Request, Response } from 'express';
-
-import User from '../models/User';
+import { User, IUser } from '../models/User';
 import { RegisterUserDto } from '../dto/RegisterUserDto';
+import { LoginUserDto } from '../dto/LoginUserDto';
 
 export class UsersService {
   async registerUser(data: RegisterUserDto) {
@@ -11,6 +10,17 @@ export class UsersService {
       return user;
     } catch (error) {
       throw new Error('Register failed!');
+    }
+  }
+
+  async loginUser(data: LoginUserDto): Promise<{ user: IUser; token: string }> {
+    try {
+      const { username, password } = data;
+      const user = await User.findByCredentials(username, password);
+      const token = user.generateAuthToken();
+      return { user, token };
+    } catch (error) {
+      throw new Error('Unable to login');
     }
   }
 }
